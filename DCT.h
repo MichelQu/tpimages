@@ -37,7 +37,7 @@ puisque B est toujours de taille 8x8.
 
 cv::Mat DCT(cv::Mat B, cv::Mat P)
 /*
-Cette fonction renvoie la matrice F = P'BP, DCT du bloc 8x8 B.
+Cette fonction renvoie la matrice F = P'BP, Discrete Cosine Transform du bloc 8x8 B.
 Paramètres : le bloc B à transformer et la matrice P de coefficients
 */
 {
@@ -53,3 +53,22 @@ Paramètres : le bloc B à transformer et la matrice P de coefficients
 
 	return F;
 };
+
+cv::Mat inverseDCT(cv::Mat F, cv::Mat P)
+/*
+Cette fonction renvoie la matrice B = PFP', en faisant la Discrete Cosine Transform inverse du bloc 8x8 B.
+Paramètres : le bloc F à transformer et la matrice P de coefficients
+*/
+{
+	cv::Mat B = cv::Mat(8, 8, CV_32FC3);
+	std::vector<cv::Mat> YIQ;
+	split(F, YIQ); // On sépare les différents channels pour pouvoir multiplier par P
+	
+	for (int i=0; i<3; i++)
+	{
+		YIQ[i] = P * YIQ[i] * P.t();
+	}
+	merge(YIQ, B); // On fusionne les différents channels pour reformer l'image RGB (ou plutôt YIQ)
+
+	return B;
+}
