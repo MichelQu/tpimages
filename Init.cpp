@@ -11,7 +11,7 @@
 using namespace std;
 using namespace cv;
 
-void init(){
+vector<vector<cv::Mat> > init(){
 	// the OpenCV data structure storing the image
 	Mat im;
 	Mat im2;
@@ -59,5 +59,5 @@ void init(){
 		imshow("Original image", im2);
 		key = waitKey();
 	}
-
+	return matriceCoupee;
 }
