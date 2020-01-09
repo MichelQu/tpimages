@@ -42,25 +42,5 @@ Mat dequantification(Mat m, int qualite){ // m : matrice quantifiée , qualite : 
 	return sortie;
 }
 
-int main(){
-	int qualite = 3;
-	Mat m = Mat::ones(8,8,CV_32F) * 10.5;
-
-	Mat quantifiee;
-	Mat dequantifiee;
-	cout << "Matrice :" << endl;
-	cout << m <<endl;
-	
-	cout << "Matrice quantifée:" << endl;
-	quantifiee = quantification(m, qualite);
-	cout << quantifiee<<endl;
-
-	
-	dequantifiee = dequantification(quantifiee, qualite);
-	cout << "Matrice déquantifiée:" << endl;
-	cout << dequantifiee<<endl;
 
 
-
-	return 0;
-}
