@@ -9,7 +9,7 @@ using namespace cv;
 vector<vector<Mat> > init(){
 	// the OpenCV data structure storing the image
 	Mat im;
-	Mat im2;
+
 	int key = 0;   
 	vector<vector<Mat> > matriceCoupee; 
 
@@ -23,11 +23,19 @@ vector<vector<Mat> > init(){
 		cout << "Exiting now..." << endl;
 		// return matriceCoupee;
 	}
-
+	
+	Mat im2 = Mat::zeros(im.rows,im.cols,CV_32FC3);
 	int moduloRow = im.rows%8;
 	int moduloCol= im.cols%8;
 	Mat imageBonFormat(im.rows+8-moduloRow, im.cols+8-moduloCol, CV_64F , 0);
-	im.convertTo(im2,CV_64F);
+	
+	for (int i =0; i< im.rows-1;i++){
+		for (int j=0; j< im.cols-1; j++){
+			im2.at<Vec3f>(i,j)[0] = (float)(im.at<Vec3b>(i,j)[0])/255.0;
+			im2.at<Vec3f>(i,j)[1] = (float)(im.at<Vec3b>(i,j)[1])/255.0;
+			im2.at<Vec3f>(i,j)[2] = (float)(im.at<Vec3b>(i,j)[2])/255.0;
+		}
+	}
 
 	//imageBonFormat.colRange(0,im.rows-1).rowRange(0,im.cols-1)=im;
 
