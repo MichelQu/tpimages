@@ -11,7 +11,7 @@
 using namespace std;
 using namespace cv;
 
-int main(){
+void init(){
 	// the OpenCV data structure storing the image
 	Mat im;
 	Mat im2;
@@ -60,6 +60,4 @@ int main(){
 		key = waitKey();
 	}
 
-
-	return 0;
 }
