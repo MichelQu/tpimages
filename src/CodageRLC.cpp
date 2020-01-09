@@ -1,4 +1,5 @@
 #include "CodageRLC.h"
+#include <iostream>
 
 // Forward declarations
 void maj_indices (int& i, int& j);
@@ -14,7 +15,7 @@ string CodageRLC (Mat bloc) {
 	// Valeur lue au parcours de la matrice
 	int temp = -1;
 	// Nombre de répétition courant
-	int count = 0;
+	int count = 1;
 	// Nombre minimum de répétitions pour encodage
 	int min_repet = 3;
 
@@ -22,6 +23,8 @@ string CodageRLC (Mat bloc) {
 	string out;
 
 	 while ( mat_in ) {
+
+		
 
 		// Si la valeur courante est égale à la valeur en mémoire
 		if (temp == bloc.at<int>(i,j)) {
@@ -45,36 +48,68 @@ string CodageRLC (Mat bloc) {
 			maj_indices ( i, j );
 		}
 
+		//cout << i << ", " << j << " : " << count << endl << endl;
+
+		
+
 	} 
 		 
 	return out;
 }
 
 void maj_indices (int& i, int& j) {
-	
-	if ( i == 0 || i == 7) {
-		if ( j == 7 ) {
-			i += 1;
-		} else {
+
+	bool updated = false;
+
+	if ( i == 0 && !updated) { 
+		updated = true;
+		if ( j % 2 == 0 ) {
 			j += 1;
 		}
-	} else {
-		if ( j == 0 || j == 7 ) {
-			if ( i == 7 ) {
-				j += 1;
-			} else {
-				i += 1;
-			}
-		} else {
-			if ( (i + j) % 2 == 0 ) {
-				i += 1;
-				j -= 1;
-			} else {
-				i -= 1;
-				j += 1;
-			}
+		else {
+			i += 1;
+			j -= 1;
 		}
 	}
+	if ( i == 7 && !updated) {
+		updated = true;
+		if ( j % 2 == 0 ) {
+			j += 1;
+		}
+		else {
+			i -= 1;
+			j += 1;
+		}
+	}
+	if ( j == 0 && !updated) {
+		updated = true;
+		if ( i % 2 == 0 ) {
+			i -= 1;
+			j += 1;
+		} else {
+			i += 1;
+		}
+	}
+	if ( j == 7 && !updated) {
+		updated = true;
+		if ( i % 2 == 0 ) {
+			i += 1;
+			j -= 1;
+		} else {
+			i += 1;
+		} 
+	}
+
+	if( !updated) {
+		if ( (i + j) % 2 == 1 ) {
+			i += 1;
+			j -= 1;
+		} else {
+			i -= 1;
+			j += 1;
+		}
+	}
+	
 }
 
 void ecriture (string& out, int temp, int count, int min_repet) {
@@ -86,6 +121,7 @@ void ecriture (string& out, int temp, int count, int min_repet) {
 		}
 	}
 	else {
+		//cout <<  " print ! " << " : " << count << endl << endl;
 		out += '#'; // Indication d'encodage
 		out += count; // Nombre de répétition
 		out += temp; // Valeur répétée
