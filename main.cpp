@@ -5,6 +5,7 @@
 
 #include "CodageRLC.h"
 #include "DCT.h"
+#include "quantification.h"
 
 using namespace std;
 using namespace cv;
@@ -21,8 +22,8 @@ int main (int argc, char* argv[]){
 	for (int i=0 ; i<lenght; i++){
 		for (int j=0 ; j<height; i++){
 			DCT(matriceImage[i][j], calcP() );
-			// quantif();
-			codageRLC();
+			quantification(matriceImage[i][j], 5);
+			CodageRLC(matriceImage[i][j]);
 		}
 	}
 	return 0;
