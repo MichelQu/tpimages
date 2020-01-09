@@ -49,8 +49,7 @@ vector<vector<Mat> > init(){
 		for (int j=0; j<im.cols/8-1;j++){
 			Range debut2(8*j,8*(j+1));
 			Mat uneLigneImage(ligneImage,Range::all(),debut2);
-			matricesAjoutees.push_back(uneLigneImage);
-			
+			matricesAjoutees.push_back(uneLigneImage);	
 		}
 		matriceCoupee.push_back(matricesAjoutees);
 
